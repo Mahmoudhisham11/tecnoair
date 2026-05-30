@@ -13,6 +13,21 @@ import {
   query,
   where,
 } from '@/app/firebase'
+import { saveFcmToken } from '@/lib/saveFcmToken'
+import { registerServiceWorker } from '@/lib/registerServiceWorker'
+import { debugFcmToken } from '@/lib/debugFcmToken'
+
+const FCM_VAPID_KEY = process.env.NEXT_PUBLIC_FCM_VAPID_KEY || ''
+let swRegistrationPromise: Promise<ServiceWorkerRegistration | null> | null = null
+
+async function setupFcm(uid: string, vapidKey: string) {
+  console.log('[FCM] Starting notification setup for user:', uid)
+  const swReg = swRegistrationPromise ? await swRegistrationPromise : null
+  const result = await debugFcmToken(vapidKey, swReg)
+  if (result.success && result.token) {
+    await saveFcmToken(uid, result.token)
+  }
+}
 
 interface UserData {
   uid: string
@@ -39,13 +54,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    swRegistrationPromise = registerServiceWorker()
+
     const savedUid = localStorage.getItem('tecnoair_uid')
     if (savedUid) {
       getDoc(doc(db, 'users', savedUid))
         .then((snap) => {
           if (snap.exists()) {
             const { password, ...data } = snap.data() as UserData & { password?: string }
-            setUser({ ...data, uid: snap.id })
+            const userData = { ...data, uid: snap.id }
+            setUser(userData)
+            if (FCM_VAPID_KEY) setupFcm(snap.id, FCM_VAPID_KEY)
           } else {
             localStorage.removeItem('tecnoair_uid')
           }
@@ -72,6 +91,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const userData = { ...safeData, uid: d.id } as UserData
     localStorage.setItem('tecnoair_uid', userData.uid)
     setUser(userData)
+    if (FCM_VAPID_KEY) setupFcm(userData.uid, FCM_VAPID_KEY)
     return userData
   }
 
@@ -91,6 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const newUser: UserData = { uid: docRef.id, name, email, role: 'user' }
     localStorage.setItem('tecnoair_uid', docRef.id)
     setUser(newUser)
+    if (FCM_VAPID_KEY) setupFcm(docRef.id, FCM_VAPID_KEY)
     return newUser
   }
 

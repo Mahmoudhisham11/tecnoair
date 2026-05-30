@@ -13,7 +13,10 @@ import {
   where,
   orderBy,
   limit,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
+import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAKiAjYEkQdgkdK31-5oeQ97TTQo5Bo-Iw",
@@ -28,6 +31,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export {
+  app,
   db,
   doc,
   getDoc,
@@ -41,4 +45,7 @@ export {
   where,
   orderBy,
   limit,
+  arrayUnion,
+  arrayRemove,
+  getMessaging,
 };

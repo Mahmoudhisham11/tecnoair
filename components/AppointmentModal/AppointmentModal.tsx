@@ -67,6 +67,7 @@ export default function AppointmentModal({ open, onClose, onSuccess, customerId,
       } else {
         await addDoc(collection(db, 'appointments'), {
           ...data,
+          reminderSent: false,
           createdAt: new Date().toISOString(),
         })
       }

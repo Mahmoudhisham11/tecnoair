@@ -24,6 +24,7 @@ export interface Appointment {
   type: AppointmentType
   status: AppointmentStatus
   notes: string
+  reminderSent?: boolean
   createdAt: string
 }
 

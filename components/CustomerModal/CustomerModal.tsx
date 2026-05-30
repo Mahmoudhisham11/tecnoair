@@ -116,6 +116,7 @@ export default function CustomerModal({ open, onClose, onSuccess, editCustomer }
               type: appt.type,
               notes: appt.notes,
               status: 'pending',
+              reminderSent: false,
               createdAt: new Date().toISOString(),
             })
           }

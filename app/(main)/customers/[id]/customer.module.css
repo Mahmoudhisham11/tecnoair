@@ -1,0 +1,291 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  width: fit-content;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: var(--primary);
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.notFound {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  padding: 40px;
+}
+
+.profileCard {
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow);
+}
+
+.profileTop {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.profileActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.actionIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: #F1F5F9;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionIcon:hover {
+  background: rgba(91, 76, 240, 0.1);
+  color: var(--primary);
+}
+
+.actionIconDanger {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: #FEF2F2;
+  color: var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.actionIconDanger:hover {
+  background: #FEE2E2;
+}
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.detailRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.detailRow svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.contactActions {
+  display: flex;
+  gap: 12px;
+}
+
+.contactBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid var(--border);
+  color: var(--text);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.contactBtn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(91, 76, 240, 0.05);
+}
+
+.waBtn:hover {
+  border-color: #25D366;
+  color: #25D366;
+  background: rgba(37, 211, 102, 0.05);
+}
+
+/* Appointments */
+.apptsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.apptCard {
+  background: #FAFBFC;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.apptHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.apptDateTime {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.apptDate {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.apptTime {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.apptBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.apptType {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.apptNotes {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.apptActions {
+  display: flex;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.apptActionBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #F1F5F9;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.apptActionBtn:hover {
+  background: rgba(91, 76, 240, 0.08);
+  color: var(--primary);
+}
+
+.apptActionBtnDanger {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #FEF2F2;
+  color: var(--danger);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.apptActionBtnDanger:hover {
+  background: #FEE2E2;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 20px;
+}

@@ -1,0 +1,36 @@
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.action {
+  font-size: 0.85rem;
+}
+
+.body {
+  padding: 16px 20px 20px;
+}
+
+@media (min-width: 640px) {
+  .header {
+    padding: 24px 24px 0;
+  }
+  .body {
+    padding: 16px 24px 24px;
+  }
+}

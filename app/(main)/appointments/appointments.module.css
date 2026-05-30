@@ -1,0 +1,76 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.count {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.filterIcon {
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.filterIcon:hover {
+  color: var(--primary);
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dateGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dateHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dateLabel {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dateCount {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 40px;
+}

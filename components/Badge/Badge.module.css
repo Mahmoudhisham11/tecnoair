@@ -1,0 +1,65 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.active {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.inactive {
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+.pending {
+  background: #FFFBEB;
+  color: #D97706;
+}
+
+.confirmed {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.completed {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.cancelled {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.maintenance {
+  background: #EFF6FF;
+  color: #2563EB;
+}
+
+.installation {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.repair {
+  background: #FFFBEB;
+  color: #D97706;
+}
+
+.inspection {
+  background: #F5F3FF;
+  color: #7C3AED;
+}
+
+.default {
+  background: #F1F5F9;
+  color: #64748B;
+}

@@ -1,0 +1,205 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Profile */
+.profileSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.profileAvatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profileName {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.profileEmail {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.profileRole {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Sections */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0 4px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.row:hover {
+  background: #FAFAFA;
+}
+
+.rowIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #F1F5F9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.rowInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.rowDesc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.rowAction {
+  display: flex;
+  align-items: center;
+}
+
+.chevron {
+  color: var(--text-secondary);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 16px;
+}
+
+/* Toggle */
+.toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: #CBD5E1;
+  border: none;
+  position: relative;
+  transition: background 0.25s;
+  cursor: pointer;
+  padding: 0;
+}
+
+.toggleOn {
+  background: var(--primary);
+}
+
+.toggleKnob {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s;
+}
+
+.toggleOn .toggleKnob {
+  transform: translateX(-20px);
+}
+
+/* Logout */
+.logoutSection {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.logoutBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 14px;
+  background: #FEF2F2;
+  color: var(--danger);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background: #FEE2E2;
+}

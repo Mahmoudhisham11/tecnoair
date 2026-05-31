@@ -1,54 +1,20 @@
-import admin from 'firebase-admin'
+import admin from "firebase-admin";
 
-interface ServiceAccount {
-  projectId?: string
-  clientEmail?: string
-  privateKey?: string
-}
+if (!admin.apps.length) {
+  const sa = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT || "{}");
 
-function getServiceAccount(): ServiceAccount | null {
-  const raw = process.env.FIREBASE_SERVICE_ACCOUNT
-  if (!raw) return null
-  try {
-    return JSON.parse(raw)
-  } catch {
-    return null
+  if (!sa.project_id || !sa.client_email || !sa.private_key) {
+    throw new Error("Missing Firebase Service Account env variable or invalid format");
   }
+
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: sa.project_id,
+      clientEmail: sa.client_email,
+      privateKey: sa.private_key.replace(/\\n/g, "\n"),
+    }),
+  });
 }
 
-function getApp() {
-  if (admin.apps.length) return admin.app()
-
-  const sa = getServiceAccount()
-
-  const credential = sa
-    ? admin.credential.cert(sa as admin.ServiceAccount)
-    : admin.credential.applicationDefault()
-
-  return admin.initializeApp({
-    credential,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'smartcoffe-b2c5e',
-  })
-}
-
-let app: admin.app.App | null = null
-let db: admin.firestore.Firestore | null = null
-let messaging: admin.messaging.Messaging | null = null
-
-function ensureInitialized() {
-  if (typeof window !== 'undefined') {
-    throw new Error('firebaseAdmin can only be used server-side')
-  }
-  if (!app) app = getApp()
-  if (!db) db = app.firestore()
-  if (!messaging) messaging = app.messaging()
-  return { app, db, messaging }
-}
-
-export function getAdminDb() {
-  return ensureInitialized().db
-}
-
-export function getAdminMessaging() {
-  return ensureInitialized().messaging
-}
+export const db = admin.firestore();
+export const messaging = admin.messaging();

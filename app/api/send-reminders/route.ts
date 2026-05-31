@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import admin from 'firebase-admin'
-import { getAdminDb, getAdminMessaging } from '@/lib/firebaseAdmin'
+import { db, messaging } from '@/lib/firebaseAdmin'
+
+type MulticastMessage = admin.messaging.MulticastMessage
 
 interface AppointmentDoc {
   id: string
@@ -30,12 +32,9 @@ function isWithin2Hours(dateStr: string, timeStr: string): boolean {
 
 export async function GET() {
   try {
-    const adminDb = getAdminDb()
-    const adminMessaging = getAdminMessaging()
-
     const today = new Date().toISOString().split('T')[0]
 
-    const snap = await adminDb
+    const snap = await db
       .collection('appointments')
       .where('date', '>=', today)
       .get()
@@ -52,7 +51,7 @@ export async function GET() {
       return NextResponse.json({ notified: 0, message: 'No upcoming appointments within 2 hours' })
     }
 
-    const usersSnap = await adminDb.collection('users').get()
+    const usersSnap = await db.collection('users').get()
     const allTokens: string[] = []
     usersSnap.forEach((d) => {
       const data = d.data() as UserDoc
@@ -69,7 +68,7 @@ export async function GET() {
     let notifiedCount = 0
 
     for (const appt of candidateAppointments) {
-      const message: admin.messaging.MulticastMessage = {
+      const message: MulticastMessage = {
         tokens: uniqueTokens,
         notification: {
           title: 'Upcoming Appointment Reminder',
@@ -85,10 +84,10 @@ export async function GET() {
         },
       }
 
-      const response = await adminMessaging.sendEachForMulticast(message)
+      const response = await messaging.sendEachForMulticast(message)
       notifiedCount += response.successCount
 
-      await adminDb.collection('appointments').doc(appt.id).update({
+      await db.collection('appointments').doc(appt.id).update({
         reminderSent: true,
       })
     }

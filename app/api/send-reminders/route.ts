@@ -1,105 +1,56 @@
 import { NextResponse } from 'next/server'
-import admin from 'firebase-admin'
 import { db, messaging } from '@/lib/firebaseAdmin'
-
-type MulticastMessage = admin.messaging.MulticastMessage
-
-interface AppointmentDoc {
-  id: string
-  customerId: string
-  customerName: string
-  date: string
-  time: string
-  type: string
-  status: string
-  notes: string
-  reminderSent?: boolean
-  createdAt: string
-}
-
-interface UserDoc {
-  id: string
-  fcmTokens?: string[]
-}
-
-function isWithin2Hours(dateStr: string, timeStr: string): boolean {
-  const appointmentDate = new Date(`${dateStr}T${timeStr}:00`)
-  const now = new Date()
-  const diffMs = appointmentDate.getTime() - now.getTime()
-  const diffHours = diffMs / (1000 * 60 * 60)
-  return diffHours > 0 && diffHours <= 2
-}
 
 export async function GET() {
   try {
-    const today = new Date().toISOString().split('T')[0]
-
-    const snap = await db
-      .collection('appointments')
-      .where('date', '>=', today)
-      .get()
-
-    const candidateAppointments: AppointmentDoc[] = []
-    snap.forEach((d) => {
-      const data = d.data() as Omit<AppointmentDoc, 'id'>
-      if (!data.reminderSent && isWithin2Hours(data.date, data.time)) {
-        candidateAppointments.push({ id: d.id, ...data })
-      }
-    })
-
-    if (candidateAppointments.length === 0) {
-      return NextResponse.json({ notified: 0, message: 'No upcoming appointments within 2 hours' })
-    }
-
     const usersSnap = await db.collection('users').get()
+    const usersCount = usersSnap.size
+    console.log('[TEST] Users found:', usersCount)
+
     const allTokens: string[] = []
     usersSnap.forEach((d) => {
-      const data = d.data() as UserDoc
+      const data = d.data() as { fcmTokens?: string[] }
       if (data.fcmTokens?.length) {
         allTokens.push(...data.fcmTokens)
       }
     })
 
-    if (allTokens.length === 0) {
-      return NextResponse.json({ notified: 0, message: 'No employee FCM tokens found' })
-    }
-
     const uniqueTokens = [...new Set(allTokens)]
-    let notifiedCount = 0
+    console.log('[TEST] Total tokens:', uniqueTokens.length)
 
-    for (const appt of candidateAppointments) {
-      const message: MulticastMessage = {
-        tokens: uniqueTokens,
-        notification: {
-          title: 'Upcoming Appointment Reminder',
-          body: `Customer ${appt.customerName} has an appointment at ${appt.time} on ${appt.date}. Please follow up.`,
-        },
-        data: {
-          type: 'appointment_reminder',
-          appointmentId: appt.id,
-          customerId: appt.customerId,
-          customerName: appt.customerName,
-          date: appt.date,
-          time: appt.time,
-        },
-      }
-
-      const response = await messaging.sendEachForMulticast(message)
-      notifiedCount += response.successCount
-
-      await db.collection('appointments').doc(appt.id).update({
-        reminderSent: true,
+    if (uniqueTokens.length === 0) {
+      return NextResponse.json({
+        users: usersCount,
+        tokens: 0,
+        notified: 0,
+        message: 'No FCM tokens found',
       })
     }
 
+    const response = await messaging.sendEachForMulticast({
+      tokens: uniqueTokens,
+      notification: {
+        title: 'Test Notification',
+        body: 'This is a test notification from system',
+      },
+      data: {
+        type: 'test',
+      },
+    })
+
+    console.log('[TEST] Success count:', response.successCount)
+    console.log('[TEST] Failure count:', response.failureCount)
+
     return NextResponse.json({
-      notified: notifiedCount,
-      appointments: candidateAppointments.length,
-      message: `Sent ${notifiedCount} notification(s) for ${candidateAppointments.length} appointment(s)`,
+      users: usersCount,
+      tokens: uniqueTokens.length,
+      notified: response.successCount,
+      failed: response.failureCount,
+      message: `Sent to ${response.successCount}/${uniqueTokens.length} tokens`,
     })
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
-    console.error('[REMINDER] Error:', msg)
+    console.error('[TEST] Error:', msg)
     return NextResponse.json({ error: msg }, { status: 500 })
   }
 }

@@ -24,6 +24,33 @@
   color: var(--text-secondary);
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.markAllBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.markAllBtn:hover {
+  background: rgba(91, 76, 240, 0.05);
+  border-color: var(--primary);
+}
+
 .bellWrap {
   position: relative;
   width: 44px;

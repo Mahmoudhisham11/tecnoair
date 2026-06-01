@@ -61,11 +61,6 @@
   color: var(--text-secondary);
 }
 
-.profileRole {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-}
-
 /* Sections */
 .section {
   display: flex;
@@ -97,14 +92,14 @@
 }
 
 .row:hover {
-  background: #FAFAFA;
+  background: var(--background);
 }
 
 .rowIcon {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  background: #F1F5F9;
+  background: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,7 +145,7 @@
   width: 44px;
   height: 24px;
   border-radius: 12px;
-  background: #CBD5E1;
+  background: var(--border);
   border: none;
   position: relative;
   transition: background 0.25s;
@@ -178,6 +173,42 @@
   transform: translateX(-20px);
 }
 
+/* Theme Selector */
+.themeOptions {
+  display: flex;
+  gap: 4px;
+  background: var(--background);
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.themeOption {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.themeOption:hover {
+  color: var(--text);
+}
+
+.themeOptionActive {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
 /* Logout */
 .logoutSection {
   display: flex;
@@ -191,15 +222,148 @@
   gap: 8px;
   padding: 14px 32px;
   border-radius: 14px;
-  background: #FEF2F2;
+  background: var(--surface-danger);
   color: var(--danger);
   border: none;
   font-size: 0.95rem;
   font-weight: 600;
   transition: all 0.2s;
   cursor: pointer;
+  font-family: inherit;
 }
 
 .logoutBtn:hover {
-  background: #FEE2E2;
+  background: var(--surface-danger-hover);
+}
+
+/* Modal Overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  padding: 16px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 0;
+}
+
+.modalTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.modalClose {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modalClose:hover {
+  background: var(--background);
+  color: var(--text);
+}
+
+.modalBody {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fieldLabel {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.fieldInput {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: var(--background);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  direction: rtl;
+}
+
+.fieldInput:focus {
+  border-color: var(--primary);
+}
+
+.fieldInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.passWrap {
+  position: relative;
+}
+
+.passToggle {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  padding: 4px;
+}
+
+.passToggle:hover {
+  color: var(--text);
+}
+
+.fieldMsg {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.fieldMsgSuccess {
+  color: var(--success);
+}
+
+.fieldMsgError {
+  color: var(--danger);
+}
+
+.modalFooter {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 0 20px 20px;
 }

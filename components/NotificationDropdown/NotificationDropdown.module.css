@@ -1,0 +1,101 @@
+.wrapper {
+  position: relative;
+}
+
+.bellBtn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--card);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.bellBtn:hover {
+  box-shadow: var(--shadow-lg);
+  color: var(--primary);
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: var(--danger);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 50px rgba(0,0,0,0.1), 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  z-index: 200;
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 8px;
+}
+
+.dropdownTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.notifList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 12px 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding: 24px 12px;
+}
+
+.viewAll {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  border-top: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.viewAll:hover {
+  background: var(--surface-hover);
+}

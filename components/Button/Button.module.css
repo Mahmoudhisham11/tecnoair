@@ -41,7 +41,7 @@
 }
 
 .ghost:hover {
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: var(--text);
 }
 

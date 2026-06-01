@@ -92,9 +92,11 @@ export async function GET() {
 
     const usersSnap = await db.collection('users').get()
     const allTokens: string[] = []
+    const userIds: string[] = []
     usersSnap.forEach((d) => {
       const fcm = (d.data() as { fcmTokens?: string[] }).fcmTokens
       if (fcm?.length) allTokens.push(...fcm)
+      userIds.push(d.id)
     })
 
     const uniqueTokens = [...new Set(allTokens)]
@@ -146,6 +148,31 @@ export async function GET() {
         reminderSent: true,
       })
       console.log('[REMINDER] reminderSent updated for:', appt.id)
+
+      const notifPayload = {
+        title: '📅 تذكير بموعد عميل',
+        message: [
+          `👤 العميل: ${appt.customerName}`,
+          `🕒 الموعد: ${formatTimeArabic(appt.time)}`,
+          `📆 التاريخ: ${formatDateArabic(appt.date)}`,
+          '',
+          'متبقي أقل من ساعتين على الموعد.',
+        ].join('\n'),
+        type: 'appointment',
+        read: false,
+        createdAt: new Date().toISOString(),
+        appointmentId: appt.id,
+        customerId: appt.customerId,
+        customerName: appt.customerName,
+      }
+
+      const batch = db.batch()
+      userIds.forEach((uid) => {
+        const ref = db.collection('notifications').doc()
+        batch.set(ref, { ...notifPayload, userId: uid })
+      })
+      await batch.commit()
+      console.log('[REMINDER] Created', userIds.length, 'in-app notifications')
 
       if (response.failureCount > 0) {
         const unregistered: string[] = []

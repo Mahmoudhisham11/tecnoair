@@ -14,10 +14,30 @@
   --border: #E2E8F0;
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.05);
+  --surface-hover: #F1F5F9;
+  --surface-active: #E2E8F0;
+  --surface-alt: #FAFBFC;
+  --surface-danger: #FEF2F2;
+  --surface-danger-hover: #FEE2E2;
   --radius: 12px;
   --radius-lg: 20px;
   --radius-xl: 28px;
   --font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[data-theme="dark"] {
+  --background: #0F172A;
+  --card: #1E293B;
+  --text: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --border: #334155;
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --surface-active: rgba(255, 255, 255, 0.1);
+  --surface-alt: rgba(255, 255, 255, 0.03);
+  --surface-danger: rgba(239, 68, 68, 0.1);
+  --surface-danger-hover: rgba(239, 68, 68, 0.18);
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 * {

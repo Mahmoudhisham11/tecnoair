@@ -9,7 +9,7 @@
 }
 
 .item:hover {
-  background: #FAFAFA;
+  background: var(--surface-hover);
 }
 
 .item:active {

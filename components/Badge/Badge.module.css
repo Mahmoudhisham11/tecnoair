@@ -15,7 +15,7 @@
 }
 
 .inactive {
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: #64748B;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .cancelled {
-  background: #FEF2F2;
+  background: var(--surface-danger);
   color: #DC2626;
 }
 
@@ -60,6 +60,6 @@
 }
 
 .default {
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: #64748B;
 }

@@ -95,7 +95,7 @@
   height: 36px;
   border-radius: 10px;
   border: none;
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -114,7 +114,7 @@
   height: 36px;
   border-radius: 10px;
   border: none;
-  background: #FEF2F2;
+  background: var(--surface-danger);
   color: var(--danger);
   display: flex;
   align-items: center;
@@ -124,7 +124,7 @@
 }
 
 .actionIconDanger:hover {
-  background: #FEE2E2;
+  background: var(--surface-danger-hover);
 }
 
 .profileDetails {
@@ -189,7 +189,7 @@
 }
 
 .apptCard {
-  background: #FAFBFC;
+  background: var(--surface-alt);
   border-radius: 12px;
   padding: 14px;
   display: flex;
@@ -252,7 +252,7 @@
   padding: 6px 12px;
   border-radius: 8px;
   border: none;
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: var(--text-secondary);
   font-size: 0.78rem;
   font-weight: 600;
@@ -272,7 +272,7 @@
   padding: 6px 12px;
   border-radius: 8px;
   border: none;
-  background: #FEF2F2;
+  background: var(--surface-danger);
   color: var(--danger);
   font-size: 0.78rem;
   font-weight: 600;
@@ -281,7 +281,7 @@
 }
 
 .apptActionBtnDanger:hover {
-  background: #FEE2E2;
+  background: var(--surface-danger-hover);
 }
 
 .empty {

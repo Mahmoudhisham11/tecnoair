@@ -85,7 +85,7 @@
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  background: #F1F5F9;
+  background: var(--surface-hover);
   display: flex;
   align-items: center;
   justify-content: center;

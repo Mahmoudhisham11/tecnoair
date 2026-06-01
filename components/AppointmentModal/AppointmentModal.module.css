@@ -39,7 +39,7 @@
   height: 36px;
   border-radius: 10px;
   border: none;
-  background: #F1F5F9;
+  background: var(--surface-hover);
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -49,7 +49,7 @@
 }
 
 .closeBtn:hover {
-  background: #E2E8F0;
+  background: var(--surface-active);
   color: var(--text);
 }
 
@@ -62,7 +62,7 @@
 }
 
 .error {
-  background: #FEF2F2;
+  background: var(--surface-danger);
   color: #DC2626;
   padding: 12px;
   border-radius: 10px;

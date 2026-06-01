@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { useAuth } from '@/app/context/AuthContext'
+import { NotificationProvider } from '@/app/context/NotificationContext'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import styles from './layout.module.css'
 
@@ -19,11 +20,13 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   if (!user) return null
 
   return (
-    <div className={styles.layout}>
-      <Sidebar />
-      <main className={styles.content}>
-        {children}
-      </main>
-    </div>
+    <NotificationProvider userId={user.uid}>
+      <div className={styles.layout}>
+        <Sidebar />
+        <main className={styles.content}>
+          {children}
+        </main>
+      </div>
+    </NotificationProvider>
   )
 }

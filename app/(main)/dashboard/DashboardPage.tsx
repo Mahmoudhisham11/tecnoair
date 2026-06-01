@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Bell } from 'lucide-react'
 import { useAuth } from '@/app/context/AuthContext'
-import { db, collection, getDocs, query, orderBy, limit } from '@/app/firebase'
+import NotificationDropdown from '@/components/NotificationDropdown/NotificationDropdown'
+import { db, collection, getDocs, query, orderBy } from '@/app/firebase'
 import { Customer } from '@/lib/types'
 import StatsCard from '@/components/StatsCard/StatsCard'
 import DashboardCard from '@/components/DashboardCard/DashboardCard'
@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const q = query(collection(db, 'customers'), orderBy('createdAt', 'desc'), limit(10))
+    const q = query(collection(db, 'customers'), orderBy('createdAt', 'desc'))
     getDocs(q).then((snap) => {
       const list: Customer[] = []
       snap.forEach((d) => list.push({ id: d.id, ...d.data() } as Customer))
@@ -35,12 +35,14 @@ export default function DashboardPage() {
 
   const activeCount = customers.filter((c) => c.status === 'active').length
   const totalJobs = customers.reduce((sum, c) => sum + (c.jobPrice || 0), 0)
+  const today = new Date().toISOString().split('T')[0]
+  const todayCount = customers.filter(c => c.createdAt?.startsWith(today)).length
   const recentCustomers = customers.slice(0, 3)
 
   const stats = [
     { label: 'إجمالي العملاء', value: customers.length, change: 0, icon: 'Users' },
     { label: 'العملاء النشطين', value: activeCount, change: 0, icon: 'Users' },
-    { label: 'قيد التنفيذ', value: customers.length - activeCount, change: 0, icon: 'Wrench' },
+    { label: 'عملاء اليوم', value: todayCount, change: 0, icon: 'CalendarCheck' },
     { label: 'إجمالي الإيرادات', value: totalJobs.toLocaleString(), change: 0, icon: 'TrendingUp' },
   ]
 
@@ -57,11 +59,7 @@ export default function DashboardPage() {
             {new Date().toLocaleDateString('ar-SA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
         </div>
-        <div className={styles.headerActions}>
-          <button className={styles.notifBtn}>
-            <Bell size={20} />
-          </button>
-        </div>
+        <NotificationDropdown />
       </motion.div>
 
       <motion.div

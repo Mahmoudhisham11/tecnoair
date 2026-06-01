@@ -35,6 +35,10 @@ export interface Notification {
   time: string
   read: boolean
   type: 'appointment' | 'payment' | 'alert' | 'info'
+  createdAt?: string
+  appointmentId?: string
+  customerId?: string
+  customerName?: string
 }
 
 export interface Stat {

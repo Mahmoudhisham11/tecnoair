@@ -15,6 +15,7 @@ import {
   limit,
   arrayUnion,
   arrayRemove,
+  onSnapshot,
 } from "firebase/firestore";
 import { getMessaging } from "firebase/messaging";
 
@@ -47,5 +48,6 @@ export {
   limit,
   arrayUnion,
   arrayRemove,
+  onSnapshot,
   getMessaging,
 };

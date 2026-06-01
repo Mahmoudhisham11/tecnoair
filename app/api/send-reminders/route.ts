@@ -11,12 +11,38 @@ interface ApptData {
   reminderSent?: boolean
 }
 
-function isWithin2Hours(dateStr: string, timeStr: string): boolean {
-  const apt = new Date(`${dateStr}T${timeStr}:00`)
-  const now = new Date()
-  const diff = apt.getTime() - now.getTime()
-  const hours = diff / (1000 * 60 * 60)
-  return hours > 0 && hours <= 2
+function nowCairo(): { year: number; month: number; day: number; hour: number; minute: number } {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Africa/Cairo',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit',
+    hour12: false,
+  }).formatToParts(new Date())
+  const get = (t: string) => parseInt(parts.find(p => p.type === t)!.value, 10)
+  return { year: get('year'), month: get('month'), day: get('day'), hour: get('hour'), minute: get('minute') }
+}
+
+function isWithin2Hours(dateStr: string, timeStr: string): { result: boolean; dbg: Record<string, unknown> } {
+  const [y, m, d] = dateStr.split('-').map(Number)
+  const [h, min] = timeStr.split(':').map(Number)
+
+  const nc = nowCairo()
+  const nowCairoDate = new Date(nc.year, nc.month - 1, nc.day, nc.hour, nc.minute, 0)
+  const apptCairo = new Date(y, m - 1, d, h, min, 0)
+
+  const diffMs = apptCairo.getTime() - nowCairoDate.getTime()
+  const diffHours = diffMs / (1000 * 60 * 60)
+  const result = diffHours > 0 && diffHours <= 2
+
+  return {
+    result,
+    dbg: {
+      nowCairo: `${nc.year}-${String(nc.month).padStart(2, '0')}-${String(nc.day).padStart(2, '0')} ${String(nc.hour).padStart(2, '0')}:${String(nc.minute).padStart(2, '0')}`,
+      apptCairo: `${dateStr} ${timeStr}`,
+      diffHours: Math.round(diffHours * 100) / 100,
+      within: result,
+    },
+  }
 }
 
 function formatTimeArabic(t: string): string {
@@ -46,17 +72,22 @@ export async function GET() {
     console.log('[REMINDER] Total appointments found:', snap.size)
 
     const candidates: ApptData[] = []
+    const allDebug: Record<string, unknown>[] = []
     snap.forEach((d) => {
       const data = d.data() as Omit<ApptData, 'id'>
-      if (!data.reminderSent && isWithin2Hours(data.date, data.time)) {
+      if (data.reminderSent) return
+      const { result, dbg } = isWithin2Hours(data.date, data.time)
+      allDebug.push({ id: d.id, customer: data.customerName, ...dbg })
+      if (result) {
         candidates.push({ id: d.id, ...data })
       }
     })
 
+    console.log('[REMINDER] Checked appointments:', JSON.stringify(allDebug, null, 2))
     console.log('[REMINDER] Appointments within 2 hours:', candidates.length)
 
     if (candidates.length === 0) {
-      return NextResponse.json({ notified: 0, message: 'لا توجد مواعيد خلال ساعتين' })
+      return NextResponse.json({ notified: 0, message: 'لا توجد مواعيد خلال ساعتين', checked: allDebug })
     }
 
     const usersSnap = await db.collection('users').get()
